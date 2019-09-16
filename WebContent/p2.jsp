@@ -1,3 +1,4 @@
+<%@page import="food.StoreVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="food.FoodVO"%>
 <%@page import="java.sql.ResultSet"%>
@@ -16,7 +17,7 @@ System.out.println(ob);
 Connection conn = null;			
 Boolean connect = false;
 
-ArrayList<FoodVO> list = new ArrayList<>();
+ArrayList<StoreVO> list = new ArrayList<>();
 	
 try {	
 	Context init = new InitialContext();
@@ -28,7 +29,7 @@ try {
 	if (ob == null)
 	//오름차순
 	{
-	sql = "select * from food ORDER BY price desc"; 
+	sql = "select * from store ORDER BY name desc"; 
 
    		} else {
 	// 내림 차순
@@ -38,13 +39,9 @@ try {
 	ResultSet rs = pstmt.executeQuery();
 	
 	while (rs.next()) {
-		FoodVO vo = new FoodVO();
+		StoreVO vo = new StoreVO();
 		vo.setName(rs.getString("name"));
-		vo.setMenu(rs.getString("menu"));
-		vo.setHome(rs.getString("home"));
-		vo.setPrice(rs.getString("price"));
 		vo.setLoc(rs.getString("loc"));
-		vo.setStar(rs.getString("star"));
 		vo.setTel(rs.getString("tel"));
 		vo.setTime(rs.getString("time"));
 		list.add(vo);
@@ -136,29 +133,21 @@ function modalClose() {
   <table class="table">
     <thead>
       <tr>
-        <th>가게이름</th>
-        <th>메뉴</th>
-        <th>원산지</th>
         <%if (ob == null) { %>
-        <th>가격<a href="print.jsp?orderby=1">↑</a></th>
+        <th>가게이름<a href="print.jsp?orderby=1">↑</a></th>
         <% } else { %>
-        <th>가격<a href="print.jsp">↓</a></th>
+        <th>가게이름<a href="print.jsp">↓</a></th>
         <% } %>
         <th>위치</th>
-        <th>별점</th>
         <th>전화번호</th>
         <th>영업시간</th>
       </tr>
     </thead>
     <tbody>
-    <%for (FoodVO vo : list) { %>
+    <%for (StoreVO vo : list) { %>
       <tr class="table-dark text-dark">
         <td><%=vo.getName() %></td>
-        <td><a href="#" onclick="getMenuName('<%=vo.getMenu() %>')"> <%=vo.getMenu() %> </a></td>
-        <td><%=vo.getHome() %> </td>
-        <td><%=vo.getPrice() %></td>
         <td><%=vo.getLoc() %></td>
-        <td><%=vo.getStar() %></td>
         <td><%=vo.getTel() %></td>
         <td><%=vo.getTime() %></td>
       </tr>      

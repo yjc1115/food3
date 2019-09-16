@@ -28,6 +28,7 @@
 	.starR.on{background-position:0 0;}				
 				
 </style>
+
 <script>				
 $(document).ready(function(){	
 	var score = 1;
@@ -63,7 +64,7 @@ $(document).ready(function(){
     Open modal
   </button>
 
-  <!-- The Modal -->
+  <!-- The Modal 시작 -->
   <div class="modal" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -92,9 +93,12 @@ $(document).ready(function(){
         <button type="button" class="btn btn-primary" id="submit">평가하기</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
         </div>
+       
+        
         
       </div>
     </div>
   </div>
+   <!-- 모달 끝 -->
 </body>
 </html>
