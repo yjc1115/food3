@@ -57,5 +57,8 @@ if (connect == true) {
 <%=loc %><br>
 <%=tel %><br>
 <%=time %><br>
+<script>
+location.href="p2.jsp";
+</script>
 </body>
 </html>

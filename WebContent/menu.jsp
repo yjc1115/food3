@@ -12,13 +12,14 @@
     pageEncoding="UTF-8"%>
 
 <%
+String s_id = request.getParameter("s_id");
 String ob = request.getParameter("orderby");
 System.out.println(ob);
 //위 데이터를 데이터 베이스에 넣기
 Connection conn = null;			
 Boolean connect = false;
 
-ArrayList<StoreVO> list = new ArrayList<>();
+ArrayList<menuVO> list = new ArrayList<>();
 	
 try {	
 	Context init = new InitialContext();
@@ -30,22 +31,21 @@ try {
 	if (ob == null)
 	//오름차순
 	{
-	sql = "select * from store ORDER BY name desc"; 
+	sql = "SELECT * FROM menu WHERE s_id = ? ORDER BY price desc;"; 
 
    		} else {
 	// 내림 차순
-	sql = "select * from store ORDER BY name asc";
+	sql = "SELECT * FROM menu WHERE s_id = ? ORDER BY price desc;";
    		}
 	PreparedStatement pstmt = conn.prepareStatement(sql);
+	pstmt.setString(1, s_id);
 	ResultSet rs = pstmt.executeQuery();
 	
 	while (rs.next()) {
-		StoreVO vo = new StoreVO();
+		menuVO vo = new menuVO();
 		vo.setId(rs.getInt("id"));
 		vo.setName(rs.getString("name"));
-		vo.setLoc(rs.getString("loc"));
-		vo.setTel(rs.getString("tel"));
-		vo.setTime(rs.getString("time"));
+		vo.setPrice(rs.getString("price"));
 		list.add(vo);
 	}
 	
@@ -136,25 +136,19 @@ function modalClose() {
     <thead>
       <tr>
         <%if (ob == null) { %>
-        <th>가게이름<a href="p2.jsp?orderby=1">↑</a></th>
+        <th>메뉴이름<a href="menu.jsp?s_id=<%=s_id %>orderby=1">↑</a></th>
         <% } else { %>
-        <th>가게이름<a href="p2.jsp">↓</a></th>
+        <th>메뉴이름<a href="menu.jsp?s_id=<%=s_id %>orderby=1">↓</a></th>
         <% } %>
-        <th>위치</th>
-        <th>전화번호</th>
-        <th>영업시간</th>
+        <th>이름</th>
+        <th>가격</th>
       </tr>
     </thead>
     <tbody>
-    <%for (StoreVO vo : list) { %>
+    <%for (menuVO vo : list) { %>
       <tr class="table-dark text-dark">
-        <td><a href="menu.jsp?s_id=<%=vo.getId() %>"><%=vo.getName() %></a></td>
-        <td><%=vo.getLoc() %></td>
-        <td><%=vo.getTel() %></td>
-        <td><%=vo.getTime()%></td>
-       
-   
-
+        <td><%=vo.getName() %></td>
+        <td><%=vo.getPrice() %></td>
       </tr>      
   	<% } %>
     </tbody>
